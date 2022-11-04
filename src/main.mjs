@@ -48,12 +48,12 @@ async function integrate() {
 
     console.log('Integrating...')
     const integrateResult = await $`gps int 0 -f`
+    console.dir(integrateResult, { depth: null })
     if (integrateResult.code !== 0) {
       // TODO: determine failure reason
       // If remote changes now exist we've entered a merge war
       // If there's an issue passing tests, etc; stop trying
       console.log('Integration failed, aborting...')
-      console.dir(integrateResult, { depth: null })
       return
     }
 

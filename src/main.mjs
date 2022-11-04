@@ -7,7 +7,7 @@ const matches = gitStatus.toString().match(/ahead (\d+), behind (\d+)/)
 
 if (matches) {
   const [_, ahead, behind] = matches
-  console.log(ahead, behind)
+  console.dir({ ahead, behind }, { depth: null })
 }
 else {
   console.log('no match')

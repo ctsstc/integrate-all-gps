@@ -55,6 +55,7 @@ async function integrate() {
       // If there's an issue passing tests, etc; stop trying
       console.log(`Integration failed with exit code: ${integrateResult.exitCode}, aborting...`)
       // console.dir(integrateResult, { depth: null })
+      await fs.writeJSON(`./integrate-errors-${Date.now()}.json`, integrateResult)
       return
     }
 

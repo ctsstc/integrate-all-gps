@@ -1,6 +1,6 @@
 {
   "name": "integrate-all-gps",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "bin": {
     "integrate-all-gps": "src/main.mjs"

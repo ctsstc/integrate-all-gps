@@ -31,7 +31,7 @@ async function getGitStatuses() {
   const [__, behindStr] = behindMatches || [null, '0']
   const ahead = parseInt(aheadStr)
   const behind = parseInt(behindStr)
-  const changes = Boolean(gitStatus.toString().split("\n").length - 1)
+  const changes = Boolean(gitStatus.toString().split("\n").length - 2)
 
   return { ahead, behind, changes }
 }

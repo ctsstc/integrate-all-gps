@@ -1,0 +1,19 @@
+{
+  "name": "integrate-all-gps",
+  "version": "1.0.0",
+  "description": "",
+  "bin": {
+    "integrate-all-gps": "src/main.mjs"
+  },
+  "main": "src/main.mjs",
+  "scripts": {
+    "start": "node src/main.mjs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "zx": "^7.1.1"
+  }
+}

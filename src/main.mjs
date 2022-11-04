@@ -4,7 +4,15 @@ import 'zx/globals'
 
 await $`git fetch`
 const { ahead, behind, changes } = await getGitStatuses()
+const originalAhead = ahead
+const originalChanges = changes
+
 console.dir({ ahead, behind, changes }, { depth: null })
+
+if (originalAhead && originalChanges) {
+  console.log('↘️ Changes found, stashing changes...')
+  await $`git stash --include-untracked`.quiet()
+}
 
 if (ahead > 0) {
 
@@ -21,6 +29,11 @@ if (ahead > 0) {
 
   console.log('Current Patches...')
   // await $`gps ls`
+}
+
+if (originalAhead && originalChanges) {
+  console.log('↗️ Restoring stash...')
+  await $`git stash pop`.quiet()
 }
 
 async function getGitStatuses() {

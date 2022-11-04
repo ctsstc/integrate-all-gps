@@ -2,6 +2,7 @@
 // import * as zx from 'zx'
 import 'zx/globals'
 
+await $`git fetch`
 const { ahead, behind, changes } = await getGitStatuses()
 console.dir({ ahead, behind, changes }, { depth: null })
 
@@ -23,7 +24,7 @@ if (ahead > 0) {
 }
 
 async function getGitStatuses() {
-  const gitStatus = await $`git fetch && git status -sb`.quiet()
+  const gitStatus = await $`git status -sb`.quiet()
   const aheadMatches = gitStatus.toString().match(/ahead (\d+)/)
   const behindMatches = gitStatus.toString().match(/behind (\d+)/)
 

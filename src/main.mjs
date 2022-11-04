@@ -14,22 +14,7 @@ if (originalAhead && originalChanges) {
   await $`git stash --include-untracked`.quiet()
 }
 
-if (ahead > 0) {
-
-  if (behind > 0) {
-    console.log('Behind, pulling...')
-    // await $`gps pull`
-  }
-
-  console.log('Integrating...')
-  // await $`gps int 0 -f`
-
-  console.log('Pulling...')
-  // await $`gps pull`
-
-  console.log('Current Patches...')
-  // await $`gps ls`
-}
+await integrate()
 
 if (originalAhead && originalChanges) {
   console.log('↗️ Restoring stash...')
@@ -48,4 +33,36 @@ async function getGitStatuses() {
   const changes = Boolean(gitStatus.toString().split("\n").length - 2)
 
   return { ahead, behind, changes }
+}
+
+async function integrate() {
+  const { ahead, behind } = await getGitStatuses()
+
+  if (await isAhead()) {
+    console.log(`${ahead} commits ahead`)
+
+    if (behind > 0) {
+      console.log('Behind, pulling...')
+      await $`gps pull`
+    }
+
+    console.log('Integrating...')
+    await $`gps int 0 -f`
+
+    console.log('Pulling...')
+    await $`gps pull`
+
+    console.log('Current Patches...')
+    await $`gps ls`
+
+    if (await isAhead()) {
+      console.log('Still ahead, integrating...\n')
+      await integrate()
+    }
+  }
+}
+
+async function isAhead() {
+  const { ahead } = await getGitStatuses()
+  return ahead > 0
 }

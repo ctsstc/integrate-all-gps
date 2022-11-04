@@ -2,16 +2,8 @@
 // import * as zx from 'zx'
 import 'zx/globals'
 
-const gitStatus = await $`git fetch && git status -sb`.quiet()
-const aheadMatches = gitStatus.toString().match(/ahead (\d+)/)
-const behindMatches = gitStatus.toString().match(/behind (\d+)/)
-
-const [_, aheadStr] = aheadMatches || [null, '0']
-const [__, behindStr] = behindMatches || [null, '0']
-const ahead = parseInt(aheadStr)
-const behind = parseInt(behindStr)
-
-console.dir({ ahead, behind }, { depth: null })
+const { ahead, behind, changes } = await getGitStatuses()
+console.dir({ ahead, behind, changes }, { depth: null })
 
 if (ahead > 0) {
 
@@ -28,4 +20,18 @@ if (ahead > 0) {
 
   console.log('Current Patches...')
   // await $`gps ls`
+}
+
+async function getGitStatuses() {
+  const gitStatus = await $`git fetch && git status -sb`.quiet()
+  const aheadMatches = gitStatus.toString().match(/ahead (\d+)/)
+  const behindMatches = gitStatus.toString().match(/behind (\d+)/)
+
+  const [_, aheadStr] = aheadMatches || [null, '0']
+  const [__, behindStr] = behindMatches || [null, '0']
+  const ahead = parseInt(aheadStr)
+  const behind = parseInt(behindStr)
+  const changes = Boolean(gitStatus.toString().split("\n").length - 1)
+
+  return { ahead, behind, changes }
 }

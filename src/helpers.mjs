@@ -53,6 +53,15 @@ export async function getGitStatuses() {
   return { ahead, behind, changes }
 }
 
+export async function stashChanges() {
+  console.log('↘️ Changes found, stashing changes...')
+  await $`git stash --include-untracked`.quiet()
+}
+
+export async function popStash() {
+  console.log('↗️ Restoring stash...')
+  await $`git stash pop`.quiet()
+}
 
 async function isAhead() {
   const { ahead } = await getGitStatuses()

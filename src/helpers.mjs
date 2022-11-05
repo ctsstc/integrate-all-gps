@@ -5,18 +5,20 @@ import 'zx/globals'
 export async function integrate() {
   const { ahead, behind } = await getGitStatuses()
   const isAhead = ahead > 0
+  const isBehind = behind > 0
 
   if (isAhead) {
     console.log(`${ahead} commits ahead`)
 
-    if (behind > 0) {
+    if (isBehind) {
       console.log('Behind, pulling...')
       await $`gps pull`
     }
 
     console.log('Integrating...')
     const integrateResult = await $`gps int 0 -f`
-    if (integrateResult.exitCode !== 0) {
+    const badExit = integrateResult.exitCode !== 0
+    if (badExit) {
       // TODO: determine failure reason
       // Checkout stdout stderr and combined
       // If remote changes now exist we've entered a merge war

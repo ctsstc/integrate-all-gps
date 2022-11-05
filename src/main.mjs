@@ -4,19 +4,18 @@ import 'zx/globals'
 
 await $`git fetch`
 const { ahead, behind, changes } = await getGitStatuses()
-const originalAhead = ahead
-const originalChanges = changes
+const handleStash = ahead & changes
 
 console.dir({ ahead, behind, changes }, { depth: null })
 
-if (originalAhead && originalChanges) {
+if (handleStash) {
   console.log('↘️ Changes found, stashing changes...')
   await $`git stash --include-untracked`.quiet()
 }
 
 await integrate()
 
-if (originalAhead && originalChanges) {
+if (handleStash) {
   console.log('↗️ Restoring stash...')
   await $`git stash pop`.quiet()
 }

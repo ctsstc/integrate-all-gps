@@ -4,8 +4,9 @@ import 'zx/globals'
 
 export async function integrate() {
   const { ahead, behind } = await getGitStatuses()
+  const isAhead = ahead > 0
 
-  if (await isAhead()) {
+  if (isAhead) {
     console.log(`${ahead} commits ahead`)
 
     if (behind > 0) {
@@ -32,7 +33,7 @@ export async function integrate() {
     console.log('Current Patches...')
     await $`gps ls`
 
-    if (await isAhead()) {
+    if (isAhead) {
       console.log('Still ahead, integrating...\n')
       await integrate()
     }
@@ -61,9 +62,4 @@ export async function stashChanges() {
 export async function popStash() {
   console.log('↗️ Restoring stash...')
   await $`git stash pop`.quiet()
-}
-
-async function isAhead() {
-  const { ahead } = await getGitStatuses()
-  return ahead > 0
 }

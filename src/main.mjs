@@ -2,6 +2,9 @@
 // import * as zx from 'zx'
 import 'zx/globals'
 
+// Maintain color for subprocess output
+process.env.FORCE_COLOR = 3
+
 await $`git fetch`
 const { ahead, behind, changes } = await getGitStatuses()
 const handleStash = ahead & changes

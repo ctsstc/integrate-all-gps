@@ -3,7 +3,8 @@
   "version": "1.0.4",
   "description": "",
   "bin": {
-    "integrate-all-gps": "src/main.mjs"
+    "integrate-all-gps": "src/main.mjs",
+    "helpers": "src/helpers.mjs"
   },
   "main": "src/main.mjs",
   "scripts": {

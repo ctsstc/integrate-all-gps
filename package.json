@@ -4,7 +4,7 @@
   "description": "",
   "bin": {
     "integrate-all-gps": "src/main.mjs",
-    "helpers": "src/helpers.mjs"
+    "helpers.mjs": "src/helpers.mjs"
   },
   "main": "src/main.mjs",
   "scripts": {

@@ -1,5 +1,7 @@
 # Integrate All GPS
 
+This is a remote command line tool to help integrate all your local patches from [Git Patch Stack](https://git-ps.sh/) assuming you're a patch hoarder like too many of us are.
+
 As long as your integrations keep passing this will keep merging them until they're all handled.
 
 ## How to Run
